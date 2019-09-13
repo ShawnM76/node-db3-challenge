@@ -29,10 +29,25 @@ function findSteps(id) {
     });
 }
 
-function add(scheme) {}
+function add(scheme) {
+  return db('schemes').insert(scheme);
+}
 
-function addStep() {}
+function addStep(stepData, id) {
+  return db('steps as stp')
+    .innerJoin('schemes as s', 'stp.scheme_id', '=', 's.id')
+    .where({ scheme_id: id })
+    .insert(stepData);
+}
 
-function update() {}
+function update(changes, id) {
+  return db('schemes')
+    .where({ id })
+    .update(changes);
+}
 
-function remove() {}
+function remove(id) {
+  return db('schemes')
+    .where({ id })
+    .del();
+}
